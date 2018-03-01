@@ -23,7 +23,7 @@ categorical_data = features_data.drop(numeric_features,axis=1)
 categorical_data_encoded = categorical_data.apply(data_encoded)
 gender = categorical_data_encoded.gender
 categorical_data_encoded = categorical_data_encoded.drop('gender',axis=1)
-#  取对数
+#  取对数  特征gender没有取对数
 def d_log(x):
     if x:
         return np.log2(x)
@@ -31,16 +31,19 @@ def d_log(x):
         return x
 categorical_data_encoded = categorical_data_encoded.applymap(d_log)
 
-features = pd.concat([numeric_data, categorical_data_encoded,gender], axis=1)
+features = pd.concat([numeric_data, categorical_data_encoded, gender], axis=1)
 features.head()
 # 归一化
 scaler  = preprocessing.StandardScaler().fit(features)
 featrues_trans = scaler.transform(features)
-x_train, x_test, y_train, y_test=train_test_split(featrues_trans, target,test_size=0.3,random_state=1)
+
+# 切分训练集测试集
+x_train, x_test, y_train, y_test=train_test_split(featrues_trans, target, test_size=0.3)
 cls = DecisionTreeRegressor()
+
 cls.fit(x_train, y_train)
 score = cls.score(x_test, y_test)
 print("Trainting score:%f" % (cls.score(x_train, y_train)))
 print("预测值:%s" %cls.predict(x_test))
 y_hat = cls.predict(x_test)
-print(np.mean(y_hat - y_test))
+print(np.mean(np.abs(y_hat - y_test)))
