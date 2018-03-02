@@ -1,4 +1,4 @@
-# TEST_ML
+# 建模流程
 1. 类别数据离散数值化，例如 gender 列，Male转化为1，Female转化为0，参考 sklearn.preprocessing.LabelEncoder
 2. 所有数据取log
 3. 所有特征归一化，参考sklearn.preprocessing.StandardScaler
