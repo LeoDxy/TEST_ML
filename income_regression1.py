@@ -41,6 +41,8 @@ model = DecisionTreeRegressor()
 model.fit(x_train, y_train)
 score = model.score(x_test, y_test)
 print("Training score:%f" % (model.score(x_train, y_train)))
+
+#  结果为负值
 print("Testing score:%f" % (model.score(x_test, y_test)))
 print("预测值:%s" % model.predict(x_test))
 y_hat = model.predict(x_test)
